@@ -4,14 +4,15 @@ const fieldHeight = 500;
 
 //array of particles (dots)
 let particles = [];
+//value of current digit
+let currentDigit = digits.nine;
 
 function setup() {
 	//create canvas
   	createCanvas(fieldWidth, fieldHeight);
 
-
-   		for (var i = 0; i < digits.zero.length; i++) {
-   			let particle = new Particle(digits.zero[i][0]+fieldWidth/2.5, digits.zero[i][1]+fieldHeight/1.5);
+   		for (var i = 0; i < currentDigit.length; i++) {
+   			let particle = new Particle(currentDigit[i][0]+fieldWidth/2.5, currentDigit[i][1]+fieldHeight/1.5);
 			particles.push(particle);
 	}
 }
