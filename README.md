@@ -8,8 +8,8 @@ This project will just show that I figured out some simple things.
 
 
 Requirements for the project:
-1) Given the X and Y coordinates of the contours of digits (0 ... 9)
-2) The contours are displayed on the screen as dots
+1) Given the X and Y coordinates of the contours of digits (0 ... 9) - DONE
+2) The contours are displayed on the screen as dots - TODO
 3) The dots move to the given coordinates according to the described law
 4) Dots are "bounced" from the mouse cursor according to the described law
 5) The position of the dots "pulsates" by timeout
