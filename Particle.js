@@ -17,6 +17,8 @@ class Particle {
 	this.minDistance = 100;
 	//Max Force attached to a particle
 	this.maxForce = 1;
+	//Strengthening the repulsion force
+	this.repulsionBoost = 10;
 	}
 
 	//update the Acceleration, Speed and Position of the Particle
@@ -48,12 +50,47 @@ class Particle {
 		return steer;
 	}
 
-	//move the Particle to the Target: determine the Acceleration depending on the corrective force 
+	mousePosition() {
+		let mouse = createVector(mouseX,mouseY);
+		return mouse;
+	}
+
+	//determine the repulsion force depending on the distance from the Mouse
+	repulsion(target) {
+		//subtracts two vectors: find the difference between the Current Position of the Particle and Mouse Position
+		let desired = p5.Vector.sub(target, this.pos);
+		//find the magnitude: find the distance to the Mouse
+		let distance = desired.mag();
+		//push away a particle close to the mouse 
+		if (distance < this.minDistance) {
+			//set the max Speed
+			desired.setMag(this.maxSpeed);
+			//reverse direction 
+			desired.mult(-1);
+			//subtracts two vectors: find the difference between the Current and Target Speed of the Particle 
+			let steer = p5.Vector.sub(desired, this.currentSpeed);
+			//limit the magnitude of the Steer vector
+			steer.limit(this.maxForce);
+
+			return steer;
+		}  else {
+			return createVector(0,0);
+		}
+	}
+
+	//move the Particle to the Target: determine the Acceleration depending on the forces
 	move() {
-		//fing the corrective force
-		let arrive = this.arrive(this.target);
-		//change the Acceleration of the Particle
-		this.applyForce(arrive);
+		//find the corrective force
+		let correctiveForce = this.arrive(this.target);
+		//change the Acceleration of the Particle by corrective force
+		this.applyForce(correctiveForce);
+		//find the repulsion force
+		let repulsionForce = this.repulsion(this.mousePosition());
+		//strengthening the repulsion force 
+		repulsionForce.mult(this.repulsionBoost);
+		//change the Acceleration of the Particle by repulsion force
+		this.applyForce(repulsionForce);
+
 	}
 
 	//change the Acceleration of the Particle

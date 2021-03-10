@@ -5,7 +5,7 @@ const fieldHeight = 500;
 //array of particles (dots)
 let particles = [];
 //value of current digit
-let currentDigit = digits.nine;
+let currentDigit = digits.zero;
 
 function setup() {
 	//create canvas
