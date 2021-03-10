@@ -20,8 +20,10 @@ function setup() {
 function draw() {
 	//show background
 	background(0);
-	//show each dot
+	//update speed, position and show each dot
 	for (var i = 0; i < particles.length; i++) {
+	particles[i].move();
+	particles[i].update();
 	particles[i].show();
 	}
 }
