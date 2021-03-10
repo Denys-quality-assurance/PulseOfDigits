@@ -66,6 +66,7 @@ class Particle {
 		}
 	}
 
+	//fing the current mouse cursor position
 	mousePosition() {
 		let mouse = createVector(mouseX,mouseY);
 		return mouse;

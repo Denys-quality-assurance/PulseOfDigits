@@ -14,5 +14,5 @@ Requirements for the project:
 4) Dots are "bounced" from the mouse cursor according to the described law - DONE
 5) The position of the dots "pulsates" by timeout - DONE
 6) The digits are centered - DONE
-7) The digits change from 9 to 0 and back when you hover the mouse cursor - TODO 
-8) If the digits have a different number of dots, then the extra dots move outside the screen and are deleted, and the missing ones appear from outside the screen
+7) The digits change from 9 to 0 and back when you hover the mouse cursor over the center - DONE
+8) If the digits have a different number of dots, then the extra dots move outside the screen and are deleted, and the missing ones appear from outside the screen - TODO 

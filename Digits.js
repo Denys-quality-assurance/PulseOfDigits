@@ -1,4 +1,134 @@
 let digits = {
+	//value of current digit 
+	currentDigit : 9,
+	//has the digit been changed recently? 
+	digitChanged : false,
+	//define the current digit
+	digitCounter : function () {
+		switch (digits.currentDigit) {
+			case 9:
+    		currentDigitCoord = digits.nine;
+    		break;
+			case 8:
+    		currentDigitCoord = digits.eight;
+    		break;
+			case 7:
+    		currentDigitCoord = digits.seven;
+    		break;
+ 			case 6:
+    		currentDigitCoord = digits.six;
+    		break;
+			case 5:
+    		currentDigitCoord = digits.five;
+    		break;
+			case 4:
+    		currentDigitCoord = digits.four;
+    		break;
+			case 3:
+    		currentDigitCoord = digits.three;
+    		break;
+			case 2:
+    		currentDigitCoord = digits.two;
+    		break;
+			case 1:
+    		currentDigitCoord = digits.one;
+    		break;
+			case 0:
+    		currentDigitCoord = digits.zero;
+    		break;          
+			default:
+    		currentDigitCoord = digits.nine;
+		};
+		//make contour for the current digit
+		digits.digitContouring();
+	},
+
+	//fing the current mouse cursor position
+	mousePosition() {
+		let mouse = createVector(mouseX,mouseY);
+		return mouse;
+	},
+
+	//change the current digit
+	digitChange : function () {
+		//find the magnitude: find the distance between Mouse and Center
+		let distance = p5.Vector.sub(createVector(width/2,height/2), digits.mousePosition()).mag();
+		//not close to the Center
+		if (digits.digitChanged) {
+			if (distance > 100) {
+				digits.digitChanged = false;
+			}			
+		} else {
+			//close to the Center: change the digit
+			if (digits.currentDigit > 0) {
+				if (distance < 50) {
+				digits.currentDigit = digits.currentDigit - 1;
+				digits.digitChanged = true;
+							console.log(digits.currentDigit);
+				} 
+			} else {
+				if (distance < 50) {
+					digits.currentDigit = 9;
+					digits.digitChanged = true;
+							console.log(digits.currentDigit);
+				}
+			}
+		}			
+	},
+
+	//time for digit pulse 
+	pulseOn : function () {
+		timeToPulse = true;
+		setTimeout(digits.pulseOff, 15);
+	},
+	
+	//not time for digit pulse 
+	pulseOff : function() {
+		timeToPulse = false;
+	},
+	
+	//set time interval for digit pusle
+	timerToPulse : function () {
+		setTimeout(digits.pulseOn, 0);
+		setTimeout(digits.pulseOn, 200);
+		setTimeout(digits.timerToPulse, 3000);				
+	},
+
+	//make contour for the current digit
+	digitContouring : function () {
+		//left border of digit contours
+		let minX = currentDigitCoord[0][0];
+		//right border of digit contours
+		let maxX = currentDigitCoord[0][0];
+		//top border of digit contours
+		let minY = currentDigitCoord[0][1];
+		//bottom border of digit contours
+		let maxY = currentDigitCoord[0][1];
+  		//find the left and right borders of digit contours
+  		for (var i = 0; i < currentDigitCoord.length; i++) {
+  			if(currentDigitCoord[i][0] < minX) {
+  				minX = currentDigitCoord[i][0];
+  			} else if (currentDigitCoord[i][0] > maxX) {
+  				maxX = currentDigitCoord[i][0];
+  			};
+  			if(currentDigitCoord[i][1] < minY) {
+  				minY = currentDigitCoord[i][1];
+  			} else if (currentDigitCoord[i][1] > maxY) {
+  				maxY = currentDigitCoord[i][1];
+  			};
+  		}
+		//center correction
+		let centerCorrectionX = width/2 - (minX+maxX)/2;
+		let centerCorrectionY = height/2 - (minY+maxY)/2;	
+	
+  		//create dots for the current digit contours
+   		for (var i = 0; i < currentDigitCoord.length; i++) {
+   			let particle = new Particle(currentDigitCoord[i][0]+centerCorrectionX, currentDigitCoord[i][1]+centerCorrectionY);
+			particles.push(particle);
+		}
+	},
+
+	//digit contours coordinates
 	zero : [
 	[10.375976659815933, -88.26458435669338],
 	[10.451338021084666, -94.93263182230294],
