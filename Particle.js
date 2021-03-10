@@ -74,9 +74,9 @@ class Particle {
 	//determine the repulsion force 	
 	pulsation(toPulse) {
 		if (toPulse) {
-		//subtracts two vectors: find the difference between the Current Position of the Particle and the Centre of the Canvas
+		//subtracts two vectors: find the difference between the Current Position of the Particle and the center of the Canvas
 		let desired = p5.Vector.sub(createVector(width/2,height/2), this.pos);
-		//push away a particle close to the Centre: set opposite direction of speed 
+		//push away a particle close to the center: set opposite direction of speed 
 		//set the max Speed
 		desired.setMag(this.maxSpeed);
 		//reverse direction 
