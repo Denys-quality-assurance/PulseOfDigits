@@ -3,7 +3,7 @@
 Technologies:
 Javascript with p5.js library
 
-I am not a programmer. But I like to study.
+I am not a programmer. I just like to study.
 This project will just show that I figured out some simple things.
 
 
@@ -15,4 +15,4 @@ Requirements for the project:
 5) The position of the dots "pulsates" by timeout - DONE
 6) The digits are centered - DONE
 7) The digits change from 9 to 0 and back when you hover the mouse cursor over the center - DONE
-8) If the digits have a different number of dots, then the extra dots move outside the screen and are deleted, and the missing ones appear from outside the screen - TODO 
+8) If the digits have a different number of dots, then the extra dots should be deleted, and the missing ones should appear from outside the digits place - DONE 

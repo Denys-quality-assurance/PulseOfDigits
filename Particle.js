@@ -1,5 +1,5 @@
 class Particle {
-	constructor(x, y) {
+	constructor(x, y, arrayNumber) {
 	//Particle properties
 	//Size of the particle
 	this.size = 7;
@@ -14,7 +14,7 @@ class Particle {
 	//Acceleration
 	this.acc = createVector();
 	//Min Distance (radius)
-	this.minDistance = 100;
+	this.minDistance = 125;
 	//Max Force attached to a particle
 	this.maxForce = 1;
 	//Strengthening the repulsion force

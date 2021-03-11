@@ -3,7 +3,11 @@ let digits = {
 	currentDigit : 9,
 	//has the digit been changed recently? 
 	digitChanged : false,
-	//define the current digit
+	//distance (radius) between the mouse and the center to change the digit 
+	changeDistance : 60,
+	//number of the dots in the current digit
+	dotsNumber : 0,
+	//define the current digit contour
 	digitCounter : function () {
 		switch (digits.currentDigit) {
 			case 9:
@@ -53,41 +57,43 @@ let digits = {
 	digitChange : function () {
 		//find the magnitude: find the distance between Mouse and Center
 		let distance = p5.Vector.sub(createVector(width/2,height/2), this.mousePosition()).mag();
-		//not close to the Center
+		//far from the Center
 		if (this.digitChanged) {
-			if (distance > 100) {
+			if (distance > this.changeDistance*2) {
 				this.digitChanged = false;
 			}			
 		} else {
 			//close to the Center: change the digit
+			//the current digit must not be less than 0 
 			if (this.currentDigit > 0) {
-				if (distance < 50) {
+				if (distance < this.changeDistance) {
 				this.currentDigit = this.currentDigit - 1;
 				this.digitChanged = true;
-							console.log(this.currentDigit);
+				this.digitCounter();
 				} 
 			} else {
-				if (distance < 50) {
+				//start from 9 again
+				if (distance < this.changeDistance) {
 					this.currentDigit = 9;
 					this.digitChanged = true;
-							console.log(this.currentDigit);
+					this.digitCounter();
 				}
 			}
 		}			
 	},
 
-	//time for digit pulse 
+	//time for digit pulse: pulsation force is on
 	pulseOn : function () {
 		timeToPulse = true;
 		setTimeout(digits.pulseOff, 15);
 	},
 	
-	//not time for digit pulse 
+	//not time for digit pulse: pulsation force is off 
 	pulseOff : function() {
 		timeToPulse = false;
 	},
 	
-	//set time interval for digit pusle
+	//set time intervals for digit pusle
 	timerToPulse : function () {
 		setTimeout(digits.pulseOn, 0);
 		setTimeout(digits.pulseOn, 200);
@@ -120,15 +126,47 @@ let digits = {
 		//center correction
 		let centerCorrectionX = fieldWidth/2 - (minX+maxX)/2;
 		let centerCorrectionY = fieldHeight/2 - (minY+maxY)/2;	
-	
-  		//create dots for the current digit contours
-   		for (var i = 0; i < currentDigitCoord.length; i++) {
-   			let particle = new Particle(currentDigitCoord[i][0]+centerCorrectionX, currentDigitCoord[i][1]+centerCorrectionY);
-			particles.push(particle);
+		
+
+		if (currentDigitCoord.length > this.dotsNumber) {
+			let deltaDots = currentDigitCoord.length - this.dotsNumber;
+  			//redefine x and y values for existing dots and add new dots for the current digit contours
+   			for (var i = 0; i < currentDigitCoord.length; i++) {
+   				if (i < currentDigitCoord.length - deltaDots) {
+   					//redefine x and y values for existing dots
+   					particles[i].target.x = currentDigitCoord[i][0]+centerCorrectionX;
+   					particles[i].target.y = currentDigitCoord[i][1]+centerCorrectionY;
+   				} else {
+   				//add new dot
+   				let particle = new Particle(currentDigitCoord[i][0]+centerCorrectionX, currentDigitCoord[i][1]+centerCorrectionY);
+				particles.push(particle);
+   				}
+			}	
+			this.dotsNumber = currentDigitCoord.length;	
+		} else if (currentDigitCoord.length == this.dotsNumber) {
+			for (var i = 0; i < currentDigitCoord.length; i++) {
+   				//redefine x and y values for existing dots
+   				particles[i].target.x = currentDigitCoord[i][0]+centerCorrectionX;
+   				particles[i].target.y = currentDigitCoord[i][1]+centerCorrectionY;
+   				}
+		} else {
+			let deltaDots = this.dotsNumber - currentDigitCoord.length;
+  			//redefine x and y values for existing dots and delete extra dots for the current digit contours
+   			for (var i = this.dotsNumber - 1; i >= 0; i--) {
+   				if (i >= this.dotsNumber - deltaDots) {
+					//delete extra dot 
+					particles.splice(i, 1);
+   				} else {
+    			//redefine x and y values for existing dots
+   				particles[i].target.x = currentDigitCoord[i][0]+centerCorrectionX;
+   				particles[i].target.y = currentDigitCoord[i][1]+centerCorrectionY; 					
+   				}
+			}	
+			this.dotsNumber = currentDigitCoord.length;	
 		}
 	},
 
-	//digit contours coordinates
+	//digits contours coordinates
 	zero : [
 	[10.375976659815933, -88.26458435669338],
 	[10.451338021084666, -94.93263182230294],
