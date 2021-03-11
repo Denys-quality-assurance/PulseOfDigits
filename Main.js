@@ -35,3 +35,9 @@ function draw() {
 	particles[i].show();
 	}
 }
+
+//full screen on click
+function doubleClicked() {
+    let fs = fullscreen();
+    fullscreen(!fs);
+}
