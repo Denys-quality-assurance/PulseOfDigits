@@ -1,6 +1,6 @@
 //canvas size
-const fieldWidth = 500;
-const fieldHeight = 500;
+const fieldWidth = window.screen.width * window.devicePixelRatio;
+const fieldHeight = window.screen.height * window.devicePixelRatio;
 
 //array of particles (dots)
 let particles = [];
@@ -36,4 +36,8 @@ function draw() {
 	}
 }
 
-
+//full screen on click
+function mousePressed() {
+    let fs = fullscreen();
+    fullscreen(!fs);
+}

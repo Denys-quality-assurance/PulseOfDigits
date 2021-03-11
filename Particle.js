@@ -4,7 +4,7 @@ class Particle {
 	//Size of the particle
 	this.size = 7;
 	//Initial position of particle	
-	this.pos = createVector(random(width), random(height));
+	this.pos = createVector(random(fieldWidth), random(fieldHeight));
 	//Target position of particle
 	this.target = createVector(x,y);
 	//Current Speed of particle
@@ -76,7 +76,7 @@ class Particle {
 	pulsation(toPulse) {
 		if (toPulse) {
 		//subtracts two vectors: find the difference between the Current Position of the Particle and the center of the Canvas
-		let desired = p5.Vector.sub(createVector(width/2,height/2), this.pos);
+		let desired = p5.Vector.sub(createVector(fieldWidth/2,fieldHeight/2), this.pos);
 		//push away a particle close to the center: set opposite direction of speed 
 		//set the max Speed
 		desired.setMag(this.maxSpeed);
@@ -130,7 +130,7 @@ class Particle {
 
 	//draw the particle
 	show() {
-		stroke(225);
+		stroke(255);
 		strokeWeight(this.size);
 		point(this.pos.x,this.pos.y);
 	}

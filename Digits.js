@@ -52,25 +52,25 @@ let digits = {
 	//change the current digit
 	digitChange : function () {
 		//find the magnitude: find the distance between Mouse and Center
-		let distance = p5.Vector.sub(createVector(width/2,height/2), digits.mousePosition()).mag();
+		let distance = p5.Vector.sub(createVector(width/2,height/2), this.mousePosition()).mag();
 		//not close to the Center
-		if (digits.digitChanged) {
+		if (this.digitChanged) {
 			if (distance > 100) {
-				digits.digitChanged = false;
+				this.digitChanged = false;
 			}			
 		} else {
 			//close to the Center: change the digit
-			if (digits.currentDigit > 0) {
+			if (this.currentDigit > 0) {
 				if (distance < 50) {
-				digits.currentDigit = digits.currentDigit - 1;
-				digits.digitChanged = true;
-							console.log(digits.currentDigit);
+				this.currentDigit = this.currentDigit - 1;
+				this.digitChanged = true;
+							console.log(this.currentDigit);
 				} 
 			} else {
 				if (distance < 50) {
-					digits.currentDigit = 9;
-					digits.digitChanged = true;
-							console.log(digits.currentDigit);
+					this.currentDigit = 9;
+					this.digitChanged = true;
+							console.log(this.currentDigit);
 				}
 			}
 		}			
@@ -118,8 +118,8 @@ let digits = {
   			};
   		}
 		//center correction
-		let centerCorrectionX = width/2 - (minX+maxX)/2;
-		let centerCorrectionY = height/2 - (minY+maxY)/2;	
+		let centerCorrectionX = fieldWidth/2 - (minX+maxX)/2;
+		let centerCorrectionY = fieldHeight/2 - (minY+maxY)/2;	
 	
   		//create dots for the current digit contours
    		for (var i = 0; i < currentDigitCoord.length; i++) {
