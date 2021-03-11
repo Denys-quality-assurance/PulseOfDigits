@@ -1,5 +1,5 @@
 class Particle {
-	constructor(x, y, arrayNumber) {
+	constructor(x, y) {
 	//Particle properties
 	//Size of the particle
 	this.size = 7;
@@ -88,7 +88,7 @@ class Particle {
 			steer.limit(this.maxForce);	
 
 			return steer;
-		}  else {
+		} else {
 			return createVector(0,0);
 		}				
 	}
